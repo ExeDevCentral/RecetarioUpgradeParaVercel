@@ -51,15 +51,15 @@
                     </p>
                     <div class="mt-auto">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ url_for('ver_receta', categoria=categoria, receta=receta.nombre) }}" 
+                            <a href="{{ url_for('ver_receta', receta_id=receta.id) }}" 
                                class="btn btn-primary btn-sm">
                                 <i class="fas fa-eye me-1"></i>Ver
                             </a>
-                            <a href="{{ url_for('editar_receta', categoria=categoria, receta=receta.nombre) }}" 
+                            <a href="{{ url_for('editar_receta', receta_id=receta.id) }}" 
                                class="btn btn-outline-secondary btn-sm">
                                 <i class="fas fa-edit me-1"></i>Editar
                             </a>
-                            <form method="POST" action="{{ url_for('eliminar_receta', categoria=categoria, receta=receta.nombre) }}" 
+                            <form method="POST" action="{{ url_for('eliminar_receta', receta_id=receta.id) }}" 
                                   onsubmit="return confirm('¿Estás seguro de eliminar esta receta?')" class="d-inline">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                     <i class="fas fa-trash me-1"></i>Eliminar
@@ -95,3 +95,4 @@
     </div>
 </div>
 {% endblock %}
+

@@ -128,15 +128,122 @@ Las recetas se almacenan en archivos de texto en:
 
 ### Desarrollo Local
 ```bash
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Inicializar base de datos
+python init_db.py
+
+# Ejecutar aplicación
 python app.py
 ```
 
-### Producción
-Para desplegar en producción, considera:
-1. Usar un servidor WSGI como Gunicorn
-2. Configurar un servidor web como Nginx
-3. Usar una base de datos en lugar de archivos
-4. Configurar variables de entorno para producción
+### 🌐 Despliegue en Vercel (GRATIS)
+
+Vercel es una excelente opción gratuita para hostear tu aplicación Flask. Aquí te guiamos paso a paso:
+
+#### 1. Preparación del Proyecto
+Tu proyecto ya está configurado para Vercel con los siguientes archivos:
+- ✅ `vercel.json` - Configuración de Vercel
+- ✅ `wsgi.py` - Punto de entrada WSGI
+- ✅ `requirements.txt` - Dependencias actualizadas
+- ✅ Configuración de base de datos PostgreSQL
+
+#### 2. Crear Cuenta en Vercel
+1. Ve a [vercel.com](https://vercel.com)
+2. Regístrate con GitHub (recomendado)
+3. Conecta tu repositorio
+
+#### 3. Configurar Base de Datos PostgreSQL
+Vercel ofrece PostgreSQL gratuito:
+
+1. En tu dashboard de Vercel, ve a **Storage**
+2. Crea una nueva base de datos PostgreSQL
+3. Copia la URL de conexión (DATABASE_URL)
+
+#### 4. Configurar Variables de Entorno
+En tu proyecto de Vercel:
+1. Ve a **Settings** → **Environment Variables**
+2. Agrega estas variables:
+   ```
+   DATABASE_URL=postgresql://usuario:password@host:puerto/database
+   SECRET_KEY=tu_clave_secreta_muy_segura_para_produccion
+   FLASK_ENV=production
+   ```
+
+#### 5. Desplegar
+1. Haz push de tu código a GitHub
+2. Vercel detectará automáticamente los cambios
+3. El despliegue se realizará automáticamente
+
+#### 6. Inicializar Base de Datos en Producción
+Después del primer despliegue, necesitas inicializar la base de datos:
+
+**Opción A: Usando Vercel CLI**
+```bash
+# Instalar Vercel CLI
+npm i -g vercel
+
+# Login
+vercel login
+
+# Desplegar
+vercel
+
+# Ejecutar script de inicialización
+vercel env pull .env.local
+python init_db.py
+```
+
+**Opción B: Crear endpoint de inicialización**
+Agrega esta ruta temporal a `app.py`:
+```python
+@app.route('/init-db')
+def init_db_endpoint():
+    if os.environ.get('FLASK_ENV') == 'production':
+        init_database()
+        return "Base de datos inicializada"
+    return "No disponible en desarrollo"
+```
+
+#### 7. Dominio Personalizado (Opcional)
+- En Vercel, ve a **Settings** → **Domains**
+- Agrega tu dominio personalizado
+- Configura los DNS según las instrucciones
+
+### 🔧 Otros Servicios de Hosting Gratuitos
+
+#### Railway
+- **URL**: [railway.app](https://railway.app)
+- **Ventajas**: PostgreSQL incluido, fácil configuración
+- **Límite**: 500 horas/mes gratis
+
+#### Render
+- **URL**: [render.com](https://render.com)
+- **Ventajas**: PostgreSQL gratuito, SSL automático
+- **Límite**: 750 horas/mes gratis
+
+#### Heroku (Alternativa)
+- **URL**: [heroku.com](https://heroku.com)
+- **Nota**: Ya no es completamente gratuito, pero tiene plan básico económico
+
+### 📊 Comparación de Servicios Gratuitos
+
+| Servicio | Base de Datos | SSL | Dominio | Límite Mensual |
+|----------|---------------|-----|---------|----------------|
+| **Vercel** | ✅ PostgreSQL | ✅ | ✅ | Ilimitado |
+| Railway | ✅ PostgreSQL | ✅ | ✅ | 500h |
+| Render | ✅ PostgreSQL | ✅ | ✅ | 750h |
+| Heroku | ❌ (Pago) | ✅ | ✅ | Pago |
+
+### 🎯 Recomendación
+**Vercel es la mejor opción** para tu proyecto porque:
+- ✅ Completamente gratuito
+- ✅ PostgreSQL incluido
+- ✅ SSL automático
+- ✅ Dominio personalizado
+- ✅ Despliegue automático desde GitHub
+- ✅ Excelente rendimiento
 
 ## 🤝 Contribuciones
 
@@ -167,3 +274,4 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 ---
 
 ⭐ Si te gusta este proyecto, ¡dale una estrella en GitHub!
+

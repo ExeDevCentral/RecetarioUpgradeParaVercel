@@ -74,7 +74,7 @@
                     <p>Navega entre categorías y ve el contenido completo de cada receta</p>
                     <p class="text-muted">Puedes editar o eliminar recetas cuando quieras</p>
                     {% if categorias %}
-                    <a href="{{ url_for('ver_categoria', categoria=categorias[0].nombre) }}" class="paso-accion">
+                    <a href="{{ url_for('ver_categoria', categoria_id=categorias[0].id) }}" class="paso-accion">
                         <i class="fas fa-eye"></i>Ver Categoría
                     </a>
                     {% else %}
@@ -141,12 +141,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url_for('ver_categoria', categoria=categoria.nombre) }}">
+                                    <a class="dropdown-item" href="{{ url_for('ver_categoria', categoria_id=categoria.id) }}">
                                         <i class="fas fa-eye me-2"></i>Ver recetas
                                     </a>
                                 </li>
                                 <li>
-                                    <form method="POST" action="{{ url_for('eliminar_categoria', categoria=categoria.nombre) }}" 
+                                    <form method="POST" action="{{ url_for('eliminar_categoria', categoria_id=categoria.id) }}" 
                                           onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')" class="d-inline">
                                         <button type="submit" class="dropdown-item text-danger">
                                             <i class="fas fa-trash me-2"></i>Eliminar
@@ -161,7 +161,7 @@
                         {{ categoria.recetas_count }} receta{{ 's' if categoria.recetas_count != 1 else '' }}
                     </p>
                     <div class="mt-auto">
-                        <a href="{{ url_for('ver_categoria', categoria=categoria.nombre) }}" 
+                        <a href="{{ url_for('ver_categoria', categoria_id=categoria.id) }}" 
                            class="btn btn-primary w-100">
                             <i class="fas fa-arrow-right me-1"></i>Ver Recetas
                         </a>

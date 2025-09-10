@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ url_for('ver_categoria', categoria=categoria) }}">
+                    <a href="{{ url_for('ver_categoria', categoria_id=receta.categoria_id) }}">
                         <i class="fas fa-folder me-1"></i>{{ categoria }}
                     </a>
                 </li>
@@ -42,12 +42,12 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="{{ url_for('editar_receta', categoria=categoria, receta=receta) }}">
+                        <a class="dropdown-item" href="{{ url_for('editar_receta', receta_id=receta.id) }}">
                             <i class="fas fa-edit me-2"></i>Editar Receta
                         </a>
                     </li>
                     <li>
-                        <form method="POST" action="{{ url_for('eliminar_receta', categoria=categoria, receta=receta) }}" 
+                        <form method="POST" action="{{ url_for('eliminar_receta', receta_id=receta.id) }}" 
                               onsubmit="return confirm('¿Estás seguro de eliminar esta receta?')" class="d-inline">
                             <button type="submit" class="dropdown-item text-danger">
                                 <i class="fas fa-trash me-2"></i>Eliminar Receta
@@ -80,13 +80,14 @@
 <div class="row mt-4">
     <div class="col-12">
         <div class="d-flex gap-2">
-            <a href="{{ url_for('ver_categoria', categoria=categoria) }}" class="btn btn-outline-secondary">
+            <a href="{{ url_for('ver_categoria', categoria_id=receta.categoria_id) }}" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-1"></i>Volver a {{ categoria }}
             </a>
-            <a href="{{ url_for('editar_receta', categoria=categoria, receta=receta) }}" class="btn btn-primary">
+            <a href="{{ url_for('editar_receta', receta_id=receta.id) }}" class="btn btn-primary">
                 <i class="fas fa-edit me-1"></i>Editar Receta
             </a>
         </div>
     </div>
 </div>
 {% endblock %}
+
